@@ -1,0 +1,61 @@
+kakoune-blackboard
+==================
+
+This project implements a plugin for https://github.com/gawel/irc3[irc3]
+that allows executing arbitrary keys on a given piece of text in
+https://github.com/mawww/kakoune[Kakoune].
+
+Instructions
+------------
+
+Setup
+~~~~~
+
+Python 3 is required to run the bot.
+
+```sh
+$ git clone https://github.com/kakoune-editor/kakoune-blackboard.git
+$ cd kakoune-blackboard
+```
+
+The recommended way to run the bot is by setting up a virtual environment,
+but this step is optional:
+
+```sh
+$ python3 -m venv .env
+$ source .env/bin/activate
+```
+
+Install the dependencies in the `requirements.txt` file, either manually
+or using the `pip` package manager:
+
+```sh
+$ pip3 install -r requirements.txt
+```
+
+Configuration
+~~~~~~~~~~~~~
+
+Edit the `kakoune_blackboard.cfg` file to tune the various settings according
+to your needs: bot identity, network, channels etc.
+
+Running
+~~~~~~~
+
+Use the following command to start the bot:
+
+```sh
+$ irc3 kakoune_blackboard.cfg
+```
+
+Refer to the documentation of `irc3` to learn more about additional flags
+(e.g. `-d` for debugging).
+
+You can also deploy an image in https://www.docker.com/[Docker] using the
+`Dockerfile` provided in this repository. After you've modified the
+configuration file, run the following commands:
+
+```sh
+$ docker build -t ${USER}/kakoune-blackboard .
+$ docker run ${USER}/kakoune-blackboard
+```
