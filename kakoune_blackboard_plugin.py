@@ -4,6 +4,7 @@
 # by lenormf
 #
 
+import os
 import shlex
 import codecs
 import subprocess
@@ -27,6 +28,13 @@ class KakouneBlackboard:
     def __init__(self, bot):
         self.bot = bot
         self.log = bot.log
+
+        self.shell = False
+
+        if "blackboard_plugin" in bot.config:
+            self.shell = bot.config["blackboard_plugin"]["shell"]
+
+        self.log.info("Allow Kakoune to spawn shells: %s", self.shell)
 
     def _prefix_messages(self, messages, prefix):
         return ["%s%s" % (prefix, v) for v in messages]
@@ -65,7 +73,9 @@ class KakouneBlackboard:
             "-f",
             keys,
         ]
+        env = {**os.environ, **{"KAKOUNE_POSIX_SHELL": "/bin/false"}} if not self.shell else os.environ
         p = subprocess.Popen(cmd,
+                             env=env,
                              stdin=subprocess.PIPE,
                              stdout=subprocess.PIPE,
                              stderr=subprocess.PIPE)
